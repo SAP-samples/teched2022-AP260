@@ -1,4 +1,4 @@
-# Session ID - Session Title
+# AP260 - Beyond Just an NFT: Unlocking Utility in Smart Contracts
 
 ## Description
 
