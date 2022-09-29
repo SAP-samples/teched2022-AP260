@@ -20,7 +20,7 @@ npm install hardhat --save-dev
 
 Once this finishes, please verify that you can run `npx hardhat` and follow the steps to create a new TypeScript project - accept all the other defaults. Et voilà - you just created your first hardhat sample project. Take a look around before we continue. 
 
-![Creating a new Hardhat sample project](images/new_hardhat.png "test")
+![Creating a new Hardhat sample project](images/new_hardhat.png)
 
 Now install some additional dependencies that we need for the sample project:
 
@@ -52,7 +52,7 @@ npx hardhat test
 
 The above will run all tests in the `tests` directory. 
 
-[Testing with Hardhat](images/hardhat_lock_test.png)
+![Testing with Hardhat](images/hardhat_lock_test.png)
 
 Before we conclude this basic "get to know hardhat" part, we will deploy the compiled contract. At this point, we will not use the live, public Ethereum mainnet or one of the testnets, but we will use a local, single node Ethereum network, which hardhat is providing to us.
 
