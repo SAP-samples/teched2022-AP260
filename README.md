@@ -251,7 +251,124 @@ At this point, you are now able to verify that all went well by using one of the
 Still with us? Ready for more smart contract development? Let's take this one step further and discuss how we can add real utility to our ERC-721 NFT smart contract.
 
 ## NFTs and Utility
-TODO
+
+Let's first create an exact copy of the existing NFT contract code, so copy over `TechedToken.sol` to a new contract called `TicketToken.sol`. Open the new contract and change the contract name inside the file also to `TicketToken` as well as the name inside the constructor as below:
+
+```
+...
+contract TicketToken is ERC721, ERC721URIStorage, Ownable {
+...
+constructor() ERC721("TicketToken", "TICKET") {}
+...
+```
+
+Let's now discuss what features our new TicketToken contract should have:
+- as our TicketToken NFTs represent tickets to events, we want to be able to store the validity of each ticket. Once a ticket has been redeemed, we want to mark it used. 
+- once a ticket has been redeemed, it cannot be transferred any more. 
+- the appearance of our TicketToken NFT should change based on that status of the validity. Before and event and before a ticket was redeemed, it might have the look of a typical paper ticket. Once redeemed, the nft image should change into another picture, remembering the customer of the great event. 
+
+To store the validity of each NFT, we need to introduce a new mapping inside our smart contract. Put the following lines just above the constructor of the smart contract:
+
+```
+//mapping from tokenID to bool (validity true/false)
+mapping(uint256 => bool) private _validity;
+```
+
+And we also want to be able to change the appearance of our NFT based on the validity state, so we need to add another mapping for the second URI that we need to store. Add this also anywhere above the constructor:
+
+```
+//mapping for tokenURIs for redeemed tickets
+mapping(uint256 => string) private _redeemedTokenURIs;
+```
+
+Before we add the functionality to the functions of the NFT, let's now start to create a new test in the `tests` folder. Start by copying an existing test and rename it to `TicketToken.ts` inside the `test` folder. Below is a template wiht an initival test for the token name and symbol that you can use:
+
+TODO start basic test here. then run with npx harhat test
+
+As the token minting function - safeMint - will now have to take two token URIs, one for the valid version and one for the redeemed version, we have to make changes to the function. To accomodate for the storage of the second URI, we simply created another function:
+
+```
+
+    function safeMint(
+        address to,
+        string memory validURI,
+        string memory redeemedURI
+    ) public onlyOwner {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _validity[tokenId] = true;
+        _safeMint(to, tokenId);
+        _setTokenURI(tokenId, validURI);
+        _setRedeemedTokenURI(tokenId, redeemedURI);
+    }
+
+    function _setRedeemedTokenURI(uint256 tokenId, string memory _tokenURI)
+        internal
+        virtual
+    {
+        require(
+            _exists(tokenId),
+            "ERC721URIStorage: URI set of nonexistent token"
+        );
+        _redeemedTokenURIs[tokenId] = _tokenURI;
+    }
+```
+
+TODO add more tests to test here...
+
+We also need a way to mark a TicketToken NFT used - for this we need to add another function:
+
+```
+    function markUsed(uint256 tokenId) public onlyOwner {
+        _validity[tokenId] = false;
+    }
+```
+
+TODO add more tests to test here...
+
+The magic to change the appearance of our NFT after it has been redeemed is happening in the tokeURI method:
+
+```
+function tokenURI(uint256 tokenId)
+    public
+    view
+    override(ERC721, ERC721URIStorage)
+    returns (string memory)
+{
+    require(_exists(tokenId), "ERC721URIStorage: tokenId not set");
+
+    if (_validity[tokenId] == true) {
+        return super.tokenURI(tokenId);
+    } else {
+        return _redeemedTokenURIs[tokenId];
+    }
+}
+```
+
+TODO add more tests to test here...
+
+
+And finally, we want to exclude redeemed TicketToken NFTs from being transferred to another user, so we require the validity of the NFT to be true inside the internal transfer function of our NFT contract:
+
+```
+function _transfer(
+    address from,
+    address to,
+    uint256 tokenId
+) internal override(ERC721) {
+    require(
+        (_validity[tokenId] == true),
+        "TICKET: ticket has already been used."
+    );
+    super._transfer(from, to, tokenId);
+}
+```
+
+TODO how to get the testing part in here. 
+
+
+
+
 
 
 
