@@ -20,6 +20,8 @@ npm install hardhat --save-dev
 
 Once this finishes, please verify that you can run `npx hardhat` and follow the steps to create a new TypeScript project - accept all the other defaults. Et voilà - you just created your first hardhat sample project. Take a look around before we continue. 
 
+![Creating a new Hardhat sample project](images/new_hardhat.png "test")
+
 Now install some additional dependencies that we need for the sample project:
 
 ```
