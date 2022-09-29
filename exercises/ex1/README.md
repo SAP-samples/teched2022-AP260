@@ -90,6 +90,8 @@ npx hardhat run scripts/deploy.ts
 
 You should get a printout for the deployment address of the contract. 
 
+![Locally deployed hardhat contract](images/hardhat_deploy.png)
+
 ## Summary
 Congratulations, you made it through the first exercise! You have successfully used hardhat, one of the best and most current Ethereum development environments out there. With the help of the Hardhat sample project, you have compiled, tested and even deployed a smart contract. Now that you have a basic understanding of how things are rolling, let's dive into the world of NFTs. 
 
