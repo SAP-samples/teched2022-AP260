@@ -1,5 +1,42 @@
 # AP260 - Beyond Just an NFT: Unlocking Utility in Smart Contracts
 
+## Description
+
+This repository contains the material for the SAP TechEd 2022 session called AP260 - Beyond Just an NFT: Unlocking Utility in Smart Contracts.  
+
+## Overview
+
+This workshop introduces attendees to the basics of modern smart contract development for Ethereum Virtuam Machine (EVM) based smart contracts. The workshop is split into three parts:
+
+- **Part 1** introduces the participants to a basic sample project using the Hardhat development environment. Here, we will make sure that your system is correctly setup and leave you with a basic understanding how smart contracts are created, tested and deployed to a local test network. 
+- In **Part 2** we dive into the world of specialized smart contracts, here ERC-721 contracts which are used for NFTs. You will create your first fully functional NFT smart contract, deploy it to a live test network and interact with it via tools such as MetaMask from a browser. 
+- Finally, **Part 3** will teach you how smart contracts can be modified to add features and functionality beyond the standard features. While we will discuss SAP Customer Experience related functionalities in our presentation, you will work hands-on on a smart contract that can be used for event ticketing.  
+
+## Requirements
+
+The requirements to follow the exercises in this repository are...
+
+## Exercises
+
+Provide the exercise content here directly in README.md using [markdown](https://guides.github.com/features/mastering-markdown/) and linking to the specific exercise pages, below is an example.
+
+- [Getting Started](exercises/ex0/)
+- [Exercise 1 - First Exercise Description](exercises/ex1/)
+    - [Exercise 1.1 - Exercise 1 Sub Exercise 1 Description](exercises/ex1#exercise-11-sub-exercise-1-description)
+    - [Exercise 1.2 - Exercise 1 Sub Exercise 2 Description](exercises/ex1#exercise-12-sub-exercise-2-description)
+- [Exercise 2 - Second Exercise Description](exercises/ex2/)
+    - [Exercise 2.1 - Exercise 2 Sub Exercise 1 Description](exercises/ex2#exercise-21-sub-exercise-1-description)
+    - [Exercise 2.2 - Exercise 2 Sub Exercise 2 Description](exercises/ex2#exercise-22-sub-exercise-2-description)
+
+  
+**OR** Link to the Tutorial Navigator for example...
+
+Start the exercises [here](https://developers.sap.com/tutorials/abap-environment-trial-onboarding.html).
+
+**IMPORTANT**
+
+Your repo must contain the .reuse and LICENSES folder and the License section below. DO NOT REMOVE the section or folders/files. Also, remove all unused template assets(images, folders, etc) from the exercises folder. 
+
 ## Intro to Web3/Smart Contrcact Developmennt with Hardhat, Ethereum and Solidity
 If you came here to learn about modern smart contract development, you're at the right spot. In this section of the workshop, you will learn how to install and use the latest and most up-to-date tools with the help of a simple starter project. 
 
@@ -571,38 +608,6 @@ Congratulations! By now you have added a lot of functionality to our NFT smart c
 Thx for staying with us this far. If you have extra questions, we're here to help. Just let us know!
 
 
-## Description
-
-This repository contains the material for the SAP TechEd 2022 session called Session ID - Session Title.  
-
-## Overview
-
-This session introduces attendees to...
-
-## Requirements
-
-The requirements to follow the exercises in this repository are...
-
-## Exercises
-
-Provide the exercise content here directly in README.md using [markdown](https://guides.github.com/features/mastering-markdown/) and linking to the specific exercise pages, below is an example.
-
-- [Getting Started](exercises/ex0/)
-- [Exercise 1 - First Exercise Description](exercises/ex1/)
-    - [Exercise 1.1 - Exercise 1 Sub Exercise 1 Description](exercises/ex1#exercise-11-sub-exercise-1-description)
-    - [Exercise 1.2 - Exercise 1 Sub Exercise 2 Description](exercises/ex1#exercise-12-sub-exercise-2-description)
-- [Exercise 2 - Second Exercise Description](exercises/ex2/)
-    - [Exercise 2.1 - Exercise 2 Sub Exercise 1 Description](exercises/ex2#exercise-21-sub-exercise-1-description)
-    - [Exercise 2.2 - Exercise 2 Sub Exercise 2 Description](exercises/ex2#exercise-22-sub-exercise-2-description)
-
-  
-**OR** Link to the Tutorial Navigator for example...
-
-Start the exercises [here](https://developers.sap.com/tutorials/abap-environment-trial-onboarding.html).
-
-**IMPORTANT**
-
-Your repo must contain the .reuse and LICENSES folder and the License section below. DO NOT REMOVE the section or folders/files. Also, remove all unused template assets(images, folders, etc) from the exercises folder. 
 
 ## How to obtain support
 
