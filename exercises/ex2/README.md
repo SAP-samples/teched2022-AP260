@@ -16,6 +16,8 @@ Let's configure a new ERC-721 smart contract:
 - Please also enable `burnable` to enable token holders to destroy their tokens and `uri storage` to be able to specify fresh metadata for each NFT that gets minted.
 - For the remaining settings, just keep the defaults. 
 
+![Using the OpenZeppelin smart contract wizard](images/wizard.png)
+
 Click the `Copy to clipboard` button and switch to Visual Studio Code. Here, in the `contracts` folder, create a new file called `TechedToken.sol` and copy over the contents. 
 
 ## Compiling the new TechedToken smart contract
@@ -106,13 +108,23 @@ Ready?
 npx hardhat run scripts/deployTeched.ts --network goerli
 ```
 
-If all went well, you have now successfully deplpoyed your first NFT smart contract to the Goerli testnet. **Please take note of the contract address that is printed in the logs.**
+If all went well, you have now successfully deplpoyed your first NFT smart contract to the Goerli testnet. 
+
+**Please take note of the contract address that is printed in the logs.**
+**Please take note of the contract address that is printed in the logs.**
+**Please take note of the contract address that is printed in the logs.**
 
 ## Using Etherscan and Verifying your contract
+
+Oh, by the way:
+
+**Please take note of the contract address that is printed in the logs.**
 
 At this point you have deployed the NFT smart contract, but you have not yet created a single NFT. To create an NFT, we'll have to interact with the functions of the smart contract. While we could do this from ethers.js and our hardhat dev environment, we want to show you another neat way to interact with contracts: the etherscan explorer.
 
 Open a browser and navigate to [goerli.etherscan.io](https://goerli.etherscan.io/). In the big search bar, type type the address of the contract you took note of earlier. Once the page has loaded, click the `Contract` tab which is a bit below. 
+
+![Etherscan](images/contract_tab.png)
 
 Bummer. You will now see the compile contract, which is not really fun to interact with. The trick is called verification. We will now verify our newly deployed smart contract and then be able to interact with the smart contract via the etherscan.io web interface. 
 
@@ -131,6 +143,8 @@ Verification is now a piece of cake - but you have to remember the contract addr
 ```
 npx hardhat verify --network goerli <contract address>
 ```
+
+![Verification](images/verification.png)
 
 If this went well, refresh the tab in the web browser - you should be able to see the read/write sections and you're now ready to interact with the live contract... almost!
 
