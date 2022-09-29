@@ -31,7 +31,11 @@ npm install hardhat --save-dev
 
 Once this finishes, please verify that you can run `npx hardhat` and follow the steps to create a new TypeScript project - accept all the other defaults. Et voilà - you just created your first hardhat sample project. Take a look around before we continue. 
 
-TODO - not sure if the folllowing is required first`npm install --save-dev "hardhat@^2.11.2" "@nomicfoundation/hardhat-toolbox@^2.0.0"`
+Now install some additional dependencies that we need for the sample project:
+
+```
+npm install --save-dev "hardhat@^2.11.2" "@nomicfoundation/hardhat-toolbox@^2.0.0"
+```
 
 This hardhat sample project comes with a default smart contract, which is in the `contracts/` directory and the full path is `contracts/Lock.sol`. The contract is quite simple and only allows the owner to lock a certain amount of ether (Ethereum's native cryptocurrency) before it can be withdrawn. 
 
@@ -95,7 +99,7 @@ To create an NFT, you will first have to deploy a smart contract with adheres to
 Let's configure a new ERC-721 smart contract:
 
 - Switch to the ERC721 tab in the wizard
-- Your're free to choose a token name and symbol, but don't forget to change these names later in the code. To keep things simple, we recommendn to choose `TechedToken` as the name and  `TECH` as the symbol. 
+- Your're free to choose a token name and symbol, but don't forget to change these names later in the code. To keep things simple, we recommend to choose `TechedToken` as the name and  `TECH` as the symbol. 
 - We don't need a base URI for our fist NFT smart contract... keep the field empty.
 - For features, choose `mintable` and `auto increment ids`. As owners of this future deployed contract, we want to be able to mint new NFTs and the internal uninque TokenID shall be automatically incremented.
 - Please also enable `burnable` to enable token holders to destroy their tokens and `uri storage` to be able to specify fresh metadata for each NFT that gets minted.
@@ -112,7 +116,7 @@ npx hardhat compile
 Whoa, what's happening? Do you also see some errors? It seems we forgot to include OpenZeppeli contracts to our hardhat development environment. Let's fix that:
 
 ```
-npm install @openzeppelin/contracts --save
+npm install @openzeppelin/contracts --save-dev
 ```
 
 Now try compiling again - `npx hardhat compile` and hardhat should happily find all imports. 
@@ -124,6 +128,7 @@ import { ethers } from "hardhat";
 
 async function main() {
 
+  //make sure to sue the correct Token name for the ContractFactory!
   const TechedToken = await ethers.getContractFactory("TechedToken");
   const techedToken = await TechedToken.deploy();
 
@@ -195,7 +200,7 @@ Ready?
 npx hardhat run scripts/deployTeched.ts --network goerli
 ```
 
-If all went well, you have now successfully deplpoyed your first NFT smart contract to the Goerli testnet. Please take note of the contract address that is printed in the logs. 
+If all went well, you have now successfully deplpoyed your first NFT smart contract to the Goerli testnet. *Please take note of the contract address that is printed in the logs.*
 
 ```
 TODO add sample deployment output
@@ -203,7 +208,7 @@ TODO add sample deployment output
 
 At this point you have deployed the NFT smart contract, but you have not yet created a single NFT. To create an NFT, we'll have to interact with the functions of the smart contract. While we could do this from ethers.js and our hardhat dev environment, we want to show you another neat way to interact with contracts: the etherscan explorer.
 
-Open a browser and navigate to [etherscan.io](https://etherscan.io/). In the big search bar, type type the address of the contract you took note of earlier. Once the page has loaded, click the `Contract` tab which is a bit below. 
+Open a browser and navigate to [goerli.etherscan.io](https://goerli.etherscan.io/). In the big search bar, type type the address of the contract you took note of earlier. Once the page has loaded, click the `Contract` tab which is a bit below. 
 
 Bummer. You will now see the compile contract, which is not really fun to interact with. The trick is called verification. We will now verify our newly deployed smart contract and then be able to interact with the smart contract via the etherscan.io web interface. 
 
@@ -223,13 +228,15 @@ Verification is now a piece of cake - but you have to remember the contract addr
 npx hardhat verify --network goerli <contract address>
 ```
 
-If this went well, refresh the tab in the web browser - you should be abke to see the read/write sections and you're now ready to interact with the live contract... almost!
+If this went well, refresh the tab in the web browser - you should be able to see the read/write sections and you're now ready to interact with the live contract... almost!
 
-By default, your browser is not able to send transaction to an ethereum (test) node. For this it to happen, we need to install the MetaMask wallet which in combination with a library called web3.js (it's used by etherscan.io on their web pages) is able to send our transactions to the network.
+By default, your browser is not able to send transaction to an ethereum (test) node. For this to happen, we need to install the MetaMask wallet which in combination with a library called web3.js (it's used by etherscan.io on their web pages) is able to send our transactions to the network.
 
 DO THIS: Visit [metamask.io](https://metamask.io/) and click the download button. Follow the steps to install MetaMask as a browser plugin. Next, click the MetaMask plugin (top right in the browser and in the add-ons section) and choose "TODO restore from seed phrase". You will find the seed phrase/words in the same download as before. This will import the same account used in the deployment script into your MetaMask wallet in the browser. 
 
 TODO images
+
+As we are using the Goerli test network, please now switch the network used for MetaMask via the top drop down box to the Goerli Test Network. For this, you need to enable the test networks by clicking the "Show/hide test networks". 
 
 Once MetaMask is ready, reload the etherscan.io page with your smart contract. In the bottom tab, be sure to have switched to Contract (which now has the green verification check mark) and click on `Write Contract` to see the write functions of your smart contract. Next, click `Connect to Web3`. This will pop up the MetaMask plugin and will need to confirm the connection to this web page. 
 
@@ -281,11 +288,47 @@ And we also want to be able to change the appearance of our NFT based on the val
 mapping(uint256 => string) private _redeemedTokenURIs;
 ```
 
-Before we add the functionality to the functions of the NFT, let's now start to create a new test in the `tests` folder. Start by copying an existing test and rename it to `TicketToken.ts` inside the `test` folder. Below is a template wiht an initival test for the token name and symbol that you can use:
+Before we add the functionality to the functions of the NFT, let's now start to create a new test in the `tests` folder. Start by copying an existing test and rename it to `TicketToken.ts` inside the `test` folder. Below is a template wiht an initial test for the token name and symbol that you can use:
 
-TODO start basic test here. then run with npx harhat test
+```
+import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+import { expect } from "chai";
+import { ethers } from "hardhat";
 
-As the token minting function - safeMint - will now have to take two token URIs, one for the valid version and one for the redeemed version, we have to make changes to the function. To accomodate for the storage of the second URI, we simply created another function:
+describe("TicketToken", function () {
+
+  async function deployFixture() {
+   
+    // Contracts are deployed using the first signer/account by default
+    const [owner, firstAccount, secondAccount] = await ethers.getSigners();
+
+    const Token = await ethers.getContractFactory("TicketToken");
+    const token = await Token.deploy();
+
+    return { token, owner, firstAccount, secondAccount };
+  }
+
+  describe("Deployment", function () {
+    const _name = "TicketToken";
+    const _symbol = "TICKET";
+
+    it("Should have the right name and symbol", async function () {
+      const { token } = await loadFixture(deployFixture);
+
+      expect(await token.name()).to.equal(_name);
+      expect(await token.symbol()).to.equal(_symbol);
+    });
+
+  });
+
+});
+
+```
+
+You should be able to run this basic test via `npx hardhat test`.
+
+As the token minting function - safeMint - will now have to take two token URIs, one for the valid version and one for the redeemed version, we have to *replace* the safeMint funcion. To accomodate for the storage of the second URI, we simply created another function. Add the following code to the `contracts/TicketToken.sol` file.
 
 ```
 
@@ -314,19 +357,195 @@ As the token minting function - safeMint - will now have to take two token URIs,
     }
 ```
 
-TODO add more tests to test here...
+Once you made changes to the smart contract, don't forget to run `npx hardhat compile` again so the TypeScript system can correctly catch up with the new API defintion.
 
-We also need a way to mark a TicketToken NFT used - for this we need to add another function:
+It is good practice to test this right away or even to write test before we add even the implementation (which we will do next). For now, we catch up with a test for new minting function in our `tests/TocketToken.ts` test file:
 
 ```
-    function markUsed(uint256 tokenId) public onlyOwner {
+    it("Should mint a token with token ID 0 & 1 to account1", async function () {
+
+      const { token, firstAccount } = await loadFixture(deployFixture);
+
+      const address1=firstAccount.address;
+     
+      await token.safeMint(address1, validIPFS, redeemedIPFS );
+      expect(await token.ownerOf(0)).to.equal(address1);
+
+      await token.safeMint(address1, validIPFS, redeemedIPFS);
+      expect(await token.ownerOf(1)).to.equal(address1);
+
+      expect(await token.balanceOf(address1)).to.equal(2);      
+    });
+
+    it("Should mint a token with token ID 0 to contract owner, transfer to account2 and check the account2 balance", async function () {
+
+      const { token, owner, secondAccount } = await loadFixture(deployFixture);
+
+      const addressOwner=owner.address;
+      await token.safeMint(addressOwner, validIPFS, redeemedIPFS);
+      expect(await token.ownerOf(0)).to.equal(addressOwner);
+
+      const address2 = secondAccount.address;
+      const tokenId = 0;
+      await token.transferFrom(addressOwner, address2, tokenId);
+      expect(await token.ownerOf(0)).to.equal(address2);
+
+      expect(await token.balanceOf(addressOwner)).to.equal(0);      
+      expect(await token.balanceOf(address2)).to.equal(1);      
+    });
+```
+
+For the new test to work, we need to add two constants for the valid/redeemed IPFS URLs. Add these just below the imports of the test to make them global, so we can refer to these from all other tests later on:
+
+```
+const validIPFS = "ipfs://bafkreiffperituayfv5thxqtn45mldwvz5vratkzheitoswxqzoh67ab4q"; //Inspire
+const redeemedIPFS = "ipfs://bafybeiadeh5hy3uw2oajyfpudedzdfai7ffgwvaifm2hq7ps4iiimdy6tm/4.json"; //SAP Academy
+```
+
+ We also need a way to mark a TicketToken NFT used - for this we need to add another function. But let's now create a test for this first. Once a ticket has been redeemed using the redeem function, we need to check the state was correctly put onto the blockchain.
+
+ We will create a new test section for all utility tests:
+
+ ```
+describe("Utility", function () {
+
+    it("Should mint a token and check that validity is true", async function () {
+
+      const { token, firstAccount } = await loadFixture(deployFixture);
+  
+      const address1 = firstAccount.address;
+      const tokenId = 0;
+      await token.safeMint(address1, validIPFS, redeemedIPFS);
+      expect(await token.ownerOf(tokenId)).to.equal(address1);
+      expect(await token.isAvailable(tokenId)).to.equal(true);      
+    });
+
+    it("Should mint a token, redeem and check that validity is false", async function () {
+
+      const { token, firstAccount } = await loadFixture(deployFixture);
+  
+      const address1 = firstAccount.address;
+      const tokenId = 0;
+      await token.safeMint(address1, validIPFS, redeemedIPFS);
+      await token.redeem(tokenId);
+      expect(await token.ownerOf(tokenId)).to.equal(address1);
+      expect(await token.isAvailable(tokenId)).to.equal(false);      
+    });
+
+  });
+ ```
+
+If you run `npx hardhat test` we expect to see a couple of issues, mainly our contract is missing a redeem and isAvailable function. Let's add these to the contract:
+
+```
+    function redeem(uint256 tokenId) public onlyOwner {
         _validity[tokenId] = false;
+    }
+
+    function isAvailable(uint256 tokenId) public view returns (bool) {
+        return _validity[tokenId];
+    }
+```
+(Don't forget to compile with `npx hardhat compile`...)
+
+`npx hardhat test` should now happily walk through all the tests.
+
+Let's now write another test that tests if only the owner of the contract, which could be the organizer of a concert, is able to mark a ticket as redeemed. 
+
+```
+    it("Should mint a token, thow exception as token owner tries to mark used (onlyOwner = contract owner)", async function () {
+
+      const { token, firstAccount } = await loadFixture(deployFixture);
+  
+      const address1 = firstAccount.address;
+      const tokenId = 0;
+      await token.safeMint(address1, validIPFS, redeemedIPFS);
+      await expect(token.connect(firstAccount).redeem(tokenId)).to.be.revertedWith(
+        "Ownable: caller is not the owner"
+      );
+    });
+```
+
+This should just work and confirms that the Solidity modifier 'onlyOwner' works just as expected for our redeem function. 
+
+Let's now work on the transferability features. If you recall, only a valid (not redeemed) ticket shall be transferable to another user. Once redeemed, no more transfers should be accepted. We will first write two tests for this:
+
+```
+    it("Should mint a token and check that validity is true and transfer token to address2", async function () {
+
+      const { token, firstAccount, secondAccount } = await loadFixture(deployFixture);
+  
+      const address1 = firstAccount.address;
+      const address2 = secondAccount.address;
+      const tokenId = 0;
+      await token.safeMint(address1, validIPFS, redeemedIPFS);
+      await token.connect(firstAccount).transferFrom(address1, address2, tokenId);
+
+      expect(await token.ownerOf(tokenId)).to.equal(address2);
+      expect(await token.isAvailable(tokenId)).to.equal(true);
+    });
+
+    it("Should mint a token, mark used and verify not transferable", async function () {
+
+      const { token, firstAccount, secondAccount } = await loadFixture(deployFixture);
+  
+      const address1 = firstAccount.address;
+      const address2 = secondAccount.address;
+      const tokenId = 0;
+      await token.safeMint(address1, validIPFS, redeemedIPFS);
+      await token.redeem(tokenId);      
+      expect(await token.isAvailable(tokenId)).to.equal(false);
+
+
+      await expect(token.connect(firstAccount).transferFrom(address1, address2, tokenId)).to.be.revertedWith(
+         "TICKET: ticket has already been used."
+       );
+    });
+```
+Running the tests right now will fail the second test, as we have not yet implemented the non-transferability feature. Let's change the transfer method of our smart contract. Add the following which overrides the built-in transfer method and adds another check:
+
+```
+    function _transfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal override(ERC721) {
+        require(
+            (_validity[tokenId] == true),
+            "TICKET: ticket has already been used."
+        );
+        super._transfer(from, to, tokenId);
     }
 ```
 
-TODO add more tests to test here...
+Now the smart contract will revert transactions that do not satisfy the require rule we have added. Running the tests again should now again pass all tests.
 
-The magic to change the appearance of our NFT after it has been redeemed is happening in the tokeURI method:
+The final feature to implement is to change the appearance of our NFT based on the availability status. Let's again first add two tests:
+
+```
+it("Should mint a token and check that tokenURI is validIPFS", async function () {
+
+  const { token, firstAccount } = await loadFixture(deployFixture);
+
+  const address1 = firstAccount.address;
+  const tokenId = 0;
+  await token.safeMint(address1, validIPFS, redeemedIPFS);
+  expect(await token.tokenURI(tokenId)).to.equal(validIPFS);
+});
+
+it("Should mint a token, redeem and check that tokenURI is redeemedIPFS", async function () {
+
+  const { token, firstAccount } = await loadFixture(deployFixture);
+
+  const address1 = firstAccount.address;
+  const tokenId = 0;
+  await token.safeMint(address1, validIPFS, redeemedIPFS);
+  await token.redeem(tokenId);
+  expect(await token.tokenURI(tokenId)).to.equal(redeemedIPFS);
+});
+```
+
+For this feature, we need to change the tokenURI method. It is already available in the `TicketToken.sol` contract and needs to be changed to this implementation:
 
 ```
 function tokenURI(uint256 tokenId)
@@ -345,36 +564,11 @@ function tokenURI(uint256 tokenId)
 }
 ```
 
-TODO add more tests to test here...
+As you can see, it's a simple `if statement` that helps us to distinguish the two URIs. Run the tests - they should all pass.  
 
+Congratulations! By now you have added a lot of functionality to our NFT smart contract and you have even verified most functionality with tests. If you want, feel free to deploy the new smart contract to Goerli (check section 2 of this tutorial) and test it all out on a real testnet. 
 
-And finally, we want to exclude redeemed TicketToken NFTs from being transferred to another user, so we require the validity of the NFT to be true inside the internal transfer function of our NFT contract:
-
-```
-function _transfer(
-    address from,
-    address to,
-    uint256 tokenId
-) internal override(ERC721) {
-    require(
-        (_validity[tokenId] == true),
-        "TICKET: ticket has already been used."
-    );
-    super._transfer(from, to, tokenId);
-}
-```
-
-TODO how to get the testing part in here. 
-
-
-
-
-
-
-
-
-
-
+Thx for staying with us this far. If you have extra questions, we're here to help. Just let us know!
 
 
 
