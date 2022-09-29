@@ -38,7 +38,7 @@ Let's check if we can compile our `Lock.sol` sample contract:
 npx hardhat compile
 ```
 
-The above command will attempt to compile all smart contracts in the `contracts` directory. Once the command finishes, you will see the created artifacts in the `artifacts` directory. 
+The above command will attempt to compile all smart contracts in the `contracts` directory. Once the command finishes, you will see the created artifacts in the `artifacts` directory. Feel free to take a look at the generated artifacts.
 
 ## Running tests for a smart contract
 
@@ -51,6 +51,8 @@ npx hardhat test
 ```
 
 The above will run all tests in the `tests` directory. 
+
+[Testing with Hardhat](images/hardhat_lock_test.png)
 
 Before we conclude this basic "get to know hardhat" part, we will deploy the compiled contract. At this point, we will not use the live, public Ethereum mainnet or one of the testnets, but we will use a local, single node Ethereum network, which hardhat is providing to us.
 
