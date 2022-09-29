@@ -154,22 +154,22 @@ By default, your browser is not able to send transaction to an ethereum (test) n
 
 DO THIS: Visit [metamask.io](https://metamask.io/) and click the download button. Follow the steps to install MetaMask as a browser plugin. Next, click the MetaMask plugin (top right in the browser and in the add-ons section) and choose to restore your wallet. You will find the seed phrase/words in the same download as before. This will import the same account used in the deployment script into your MetaMask wallet in the browser. If you are outside of a workshop environment, you will have to create a new wallet or use an existing wallet to continue. It's important to import and use the same private key that you previously added to the `hardhat.config.ts` file. 
 
-TODO images
+![Setup MetaMask for workshop](images/metamask_recover.png)
 
 As we are using the Goerli test network, please now switch the network used for MetaMask via the top drop down box to the Goerli Test Network. For this, you need to enable the test networks by clicking the "Show/hide test networks". 
+
+![Show the test networks](images/showhide.png)
 
 ## Creating a first NFT via the EtherScan contract explorer and MetaMask
 
 Once MetaMask is ready, reload the etherscan.io page with your smart contract. In the bottom tab, be sure to have switched to Contract (which now has the green verification check mark) and click on `Write Contract` to see the write functions of your smart contract. Next, click `Connect to Web3`. This will pop up the MetaMask plugin and will need to confirm the connection to this web page. 
-
-TODO images/animated gif?
 
 We will next create our first NFT by calling the safeMint function - click on safeMint in the function list on etherscan.io. This function requires two inputs: 
 
 - to: the address the NFT should be owned by
 - uri: a link to the metadata of the NFT
 
-TODO - NFT Intro / Info via presentaiton at this point - info about metadata, ipfs, etc.
+![Calling safeMint from Etherscan](images/etherscan_safemint.png)
 
 To mint your first NFT, let's choose your public address (look it up via MetaMask) for the `to` field. For the uri to the MetaData, you can choose this IPFS link, which we have prepared beforehand: `TODO ipfs://sdfasdfdasfasdfsdf`.
 
@@ -178,7 +178,6 @@ Click the `Write` button and confirm the transaction via MetaMask. Now check the
 ## Checking your NFT via the OpenSea Marketplace
 
 At this point, you are now able to verify that all went well by using one of the public NFT marketplaces such as Opensea.io. As we have used the Goerli Ethereum testnet, we'll have to switch to the testnet version of Opensea.io, too - which is [testnets.opensea.io](https://testnets.opensea.io/). Search for your smart contract... with a bit of luck (and time, it often takes a few minutes) you will be able to find your fresh NFT on OpenSea.
-
 
 ## Summary
 
