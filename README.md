@@ -571,8 +571,6 @@ Congratulations! By now you have added a lot of functionality to our NFT smart c
 Thx for staying with us this far. If you have extra questions, we're here to help. Just let us know!
 
 
-
-
 ## Description
 
 This repository contains the material for the SAP TechEd 2022 session called Session ID - Session Title.  
