@@ -36,7 +36,7 @@ And we also want to be able to change the appearance of our NFT based on the val
 mapping(uint256 => string) private _redeemedTokenURIs;
 ```
 
-Before we add the functionality to the functions of the NFT, let's now start to create a new test in the `tests` folder. Start by copying an existing test and rename it to `TicketToken.ts` inside the `test` folder. Below is a template wiht an initial test for the token name and symbol that you can use:
+Before we add the functionality to the functions of the NFT, let's now start to create a new test in the `tests` folder. Therefore, create the file `TicketToken.ts` inside the `test` folder. Below is a template wiht an initial test for the token name and symbol that you can use:
 
 ```
 import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
@@ -144,18 +144,24 @@ It is good practice to test this right away or even to write test before we add 
     });
 ```
 
-For the new test to work, we need to add two constants for the valid/redeemed IPFS URLs. Add these just below the imports of the test to make them global, so we can refer to these from all other tests later on:
+For the new test to work, we need to add two constants for the valid/redeemed IPFS URLs. Add these **just below the imports** of the test to make them global, so we can refer to these from all other tests later on:
 
 ```
 const validIPFS = "ipfs://bafkreigbny3owmnda6ojabcpyoukswh75tto4gpqkitswtv6tb4ypb7aaa";
 const redeemedIPFS = "ipfs://bafkreiccyxvqbivjcjbebiuva4d2lwrg47bxmffjpho2cab3ktyacxqqbu";
 ```
 
+Now we can run the test again:
+
+```
+npx hardhat test
+```
+
 ## Storing token redemption on the blockchain
 
  We also need a way to mark a TicketToken NFT used - for this we need to add another function. But let's now create a test for this first. Once a ticket has been redeemed using the redeem function, we need to check the state was correctly put onto the blockchain.
 
- We will create a new test section for all utility tests:
+ We will create a new test section for all utility tests. Therefore, we add the following `describe` code before the last line:
 
  ```
 describe("Utility", function () {
