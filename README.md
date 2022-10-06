@@ -1,8 +1,10 @@
 # AP260 - Beyond Just an NFT: Unlocking Utility in Smart Contracts
 
 ## TODO
+- ex1 screenshots Visual Code and Open Terminal
+- check hardhat plugin is installed?
+- rename GOERLI_PRIVATE_KEY?
 - check with teched team for NFT images ex2
-
 
 ## Description
 

@@ -4,6 +4,23 @@ If you came here to learn about modern smart contract development, you're at the
 
 
 ## Creating and exploring an new hardhat project
+
+Open Visual Code 
+
+TODO Screenshot
+
+Open Terminal
+
+TODO Screenshot
+
+
+At the Terminal window create a new `ap260` folder and open this folder:
+
+```
+mkdir ap260
+cd ap260
+```
+
 To get started with hardhat, please create a new empty dev directory and open it using Visual Studio Code. If you need a folder name, choose `teched2022-AP260` - that's what we chose. 
 
 Next, let's create a new Node.js project:
