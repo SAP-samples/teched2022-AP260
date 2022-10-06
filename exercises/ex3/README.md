@@ -147,8 +147,8 @@ It is good practice to test this right away or even to write test before we add 
 For the new test to work, we need to add two constants for the valid/redeemed IPFS URLs. Add these just below the imports of the test to make them global, so we can refer to these from all other tests later on:
 
 ```
-const validIPFS = "ipfs://bafkreiffperituayfv5thxqtn45mldwvz5vratkzheitoswxqzoh67ab4q"; //Inspire
-const redeemedIPFS = "ipfs://bafybeiadeh5hy3uw2oajyfpudedzdfai7ffgwvaifm2hq7ps4iiimdy6tm/4.json"; //SAP Academy
+const validIPFS = "ipfs://bafkreigbny3owmnda6ojabcpyoukswh75tto4gpqkitswtv6tb4ypb7aaa";
+const redeemedIPFS = "ipfs://bafkreiccyxvqbivjcjbebiuva4d2lwrg47bxmffjpho2cab3ktyacxqqbu";
 ```
 
 ## Storing token redemption on the blockchain

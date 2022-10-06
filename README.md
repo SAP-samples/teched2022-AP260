@@ -1,8 +1,7 @@
 # AP260 - Beyond Just an NFT: Unlocking Utility in Smart Contracts
 
 ## TODO
-- ex2 create metadata and image on IPFS and change info for 
-- ex3 valid/redeemed IPFS metadata and change in ex3
+- check with teched team for NFT images ex2
 
 
 ## Description

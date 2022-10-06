@@ -171,7 +171,13 @@ We will next create our first NFT by calling the safeMint function - click on sa
 
 ![Calling safeMint from Etherscan](images/etherscan_safemint.png)
 
-To mint your first NFT, let's choose your public address (look it up via MetaMask) for the `to` field. For the uri to the MetaData, you can choose this IPFS link, which we have prepared beforehand: `TODO ipfs://sdfasdfdasfasdfsdf`.
+To mint your first NFT, let's choose your public address (look it up via MetaMask) for the `to` field. For the uri to the MetaData, you can choose this IPFS link, which we have prepared beforehand: 
+
+```
+ipfs://bafkreifbyh6ekzouvhs43hrlyxoibtrkpqqp2ttjcbm5tailauzsds6bwu
+```
+
+To see a sample metadata file, take a look at the `res/metadata.json` file. 
 
 Click the `Write` button and confirm the transaction via MetaMask. Now check the transaction and it's status by using the link just next to the `Write` button. 
 
