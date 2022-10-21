@@ -1,11 +1,10 @@
 # Exercise 1 - Intro to Web3/Smart Contrcact Development with Hardhat, Ethereum and Solidity
 
-If you came here to learn about modern smart contract development, you're at the right spot. In this exercise, you will learn how to install and use the latest and most up-to-date tools with the help of a simple starter project. 
-
+If you came here to learn about modern smart contract development, you're at the right spot. In this exercise, you will learn how to install and use the latest and most up-to-date tools with the help of a simple starter project.
 
 ## Creating and exploring an new hardhat project
 
-Open Visual Code 
+Open Visual Code
 
 TODO Screenshot
 
@@ -13,45 +12,44 @@ Open Terminal
 
 TODO Screenshot
 
-
 At the Terminal window create a new `ap260` folder and open this folder:
 
-```
+```shell
 mkdir ap260
 cd ap260
 ```
 
-To get started with hardhat, please create a new empty dev directory and open it using Visual Studio Code. If you need a folder name, choose `teched2022-AP260` - that's what we chose. 
+To get started with hardhat, please create a new empty dev directory and open it using Visual Studio Code. If you need a folder name, choose `teched2022-AP260` - that's what we chose.
 
 Next, let's create a new Node.js project:
 
-```
+```shell
 npm init -y
 ```
 
 Now, we'll be installing hardhat as a developer dependency:
 
-```
+```shell
 npm install hardhat --save-dev
 ```
 
-Once this finishes, please verify that you can run `npx hardhat` and follow the steps to **create a new TypeScript project - accept all the other defaults. Et voilà - you just created your first hardhat sample project. Take a look around before we continue. 
+Once this finishes, please verify that you can run `npx hardhat` and follow the steps to **create a new TypeScript project - accept all the other defaults. Et voilà - you just created your first hardhat sample project. Take a look around before we continue.
 
 ![Creating a new Hardhat sample project](images/new_hardhat.png)
 
 Once you accepted 'TypeScript project' accept all the details. Now install some additional dependencies that we need for the sample project:
 
-```
+```shell
 npm install --save-dev "hardhat@^2.11.2" "@nomicfoundation/hardhat-toolbox@^2.0.0"
 ```
 
 ## Compiling your first sample smart contract
 
-This hardhat sample project comes with a default smart contract, which is in the `contracts/` directory and the full path is `contracts/Lock.sol`. The contract is quite simple and only allows the owner to lock a certain amount of ether (Ethereum's native cryptocurrency) before it can be withdrawn. 
+This hardhat sample project comes with a default smart contract, which is in the `contracts/` directory and the full path is `contracts/Lock.sol`. The contract is quite simple and only allows the owner to lock a certain amount of ether (Ethereum's native cryptocurrency) before it can be withdrawn.
 
 Let's check if we can compile our `Lock.sol` sample contract:
 
-```
+```shell
 npx hardhat compile
 ```
 
@@ -59,15 +57,15 @@ The above command will attempt to compile all smart contracts in the `contracts`
 
 ## Running tests for a smart contract
 
-Next we will check that our testing infrastructure is up and running. The sample project comes with a test for the Lock.sol in the `test` directory: check `tests/Lock.ts` (notice the test is a TypeScript test file, not a .sol = solidity file). 
+Next we will check that our testing infrastructure is up and running. The sample project comes with a test for the Lock.sol in the `test` directory: check `tests/Lock.ts` (notice the test is a TypeScript test file, not a .sol = solidity file).
 
 We're not yet diving into details and simply want to check our testing setup works:
 
-```
+```shell
 npx hardhat test
 ```
 
-The above will run all tests in the `tests` directory. 
+The above will run all tests in the `tests` directory.
 
 ![Testing with Hardhat](images/hardhat_lock_test.png)
 
@@ -75,11 +73,11 @@ Before we conclude this basic "get to know hardhat" part, we will deploy the com
 
 ## Deploying the sample contract to a local test network
 
-You will notice a deployment script for the `Lock.sol` contract in the `scripts`  folder called `deploy.ts`. It uses the TypeScript variant of ethers.js, a well-known Ethereum JavaScript library. 
+You will notice a deployment script for the `Lock.sol` contract in the `scripts`  folder called `deploy.ts`. It uses the TypeScript variant of ethers.js, a well-known Ethereum JavaScript library.
 
 This script first calculates a timestamp being one year in the future, in seconds:
 
-```
+```typescript
   const currentTimestampInSeconds = Math.round(Date.now() / 1000);
   const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
   const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
@@ -87,30 +85,31 @@ This script first calculates a timestamp being one year in the future, in second
 
 It will then calculate the lockedAmount which needs to be in WEI (the smallest part of an ether):
 
-```
+```typescript
 const lockedAmount = ethers.utils.parseEther("1");
 ```
 
 And finally it deploys the `Lock.sol` contract to the network:
-```
+
+```typescript
   const Lock = await ethers.getContractFactory("Lock");
   const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
 
   await lock.deployed();
 ```
- 
+
  Let's run it - and don't worry, the local hardhat network is reset each time if you run the following command:
 
-```
+```shell
 npx hardhat run scripts/deploy.ts
 ```
 
-You should get a printout for the deployment address of the contract. 
+You should get a printout for the deployment address of the contract.
 
 ![Locally deployed hardhat contract](images/hardhat_deploy.png)
 
 ## Summary
-Congratulations, you made it through the first exercise! You have successfully used hardhat, one of the best and most current Ethereum development environments out there. With the help of the Hardhat sample project, you have compiled, tested and even deployed a smart contract. Now that you have a basic understanding of how things are rolling, let's dive into the world of NFTs. 
+
+Congratulations, you made it through the first exercise! You have successfully used hardhat, one of the best and most current Ethereum development environments out there. With the help of the Hardhat sample project, you have compiled, tested and even deployed a smart contract. Now that you have a basic understanding of how things are rolling, let's dive into the world of NFTs.
 
 Continue to - [Exercise 2 - Diving into the world of NFTs](../ex2/README.md)
-
