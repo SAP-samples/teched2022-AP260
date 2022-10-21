@@ -1,10 +1,14 @@
 # Excercise 3 - Adding utility to your smart contracts
 
-In this exercise we will go beyond the standard functionality of NFTs. This is what we think is really interesting, especially when it comes to potential integration with other systems at SAP. While we discuss utilities in our workshop talk track and presentation, for this exercise we need to make sure it's achievable in short time. That's why we will transform our existing standard NFT into a TicketToken: the NFT is mean to be used as an event ticket and can redeemed, transferred to another user, etc.
+In this exercise we will go beyond the standard functionality of NFTs. This is what we think is really interesting, especially when it comes to potential integration with other systems at SAP. While we discuss utilities in our workshop talk track and presentation, for this exercise we need to make sure it's achievable in short time. That's why we will transform our existing standard NFT into a TicketToken: The NFT is mean to be used as an event ticket and can be redeemed, transferred to another user, and more.
 
 ## Preparing the TicketToken.sol smart contract
 
-Let's first create an exact copy of the existing NFT contract code, so copy over `TechedToken.sol` to a new contract called `TicketToken.sol`. Open the new contract and change the contract name inside the file also to `TicketToken` as well as the name inside the constructor as below:
+Let's first create an exact copy of the existing NFT contract code:
+
+- Copy over `TechedToken.sol` to a new contract called `TicketToken.sol`.
+- Open the new contract and change the contract name inside the file to `TicketToken`.
+- Change as well as the name of the NFT inside the constructor as below:
 
 ```solidity
 ...
@@ -16,9 +20,9 @@ constructor() ERC721("TicketToken", "TICKET") {}
 
 Let's now discuss what features our new TicketToken contract should have:
 
-- as our TicketToken NFTs represent tickets to events, we want to be able to store the validity of each ticket. Once a ticket has been redeemed, we want to mark it used.
-- once a ticket has been redeemed, it cannot be transferred any more. This could be a great feature which prevents the sale of already redeemed tickets on marketplaces such as OpenSea.
-- the appearance of our TicketToken NFT should change based on the status of the validity. A valid, non-redeemed ticket might have the look of a typical paper ticket. Once redeemed, the nft image should change into another picture, for example to remember the great event.
+- As our TicketToken NFTs represent tickets to events, we want to be able to store the validity of each ticket. Once a ticket has been redeemed, we want to mark it used.
+- Once a ticket has been redeemed, it cannot be transferred any more. This could be a great feature which prevents the sale of already redeemed tickets on marketplaces such as OpenSea.
+- The appearance of our TicketToken NFT should change based on the status of the validity. A valid, non-redeemed ticket might have the look of a typical paper ticket. Once redeemed, the NFT image should change into another picture, for example to remember the great event.
 
 ## Storing additional information: ticket (NFT) validity
 
@@ -36,13 +40,16 @@ And we also want to be able to change the appearance of our NFT based on the val
 mapping(uint256 => string) private _redeemedTokenURIs;
 ```
 
-Before we add the functionality to the functions of the NFT, let's now start to create a new test in the `tests` folder. Therefore, create the file `TicketToken.ts` inside the `test` folder. Below is a template wiht an initial test for the token name and symbol that you can use:
+Before we add the functionality to the functions of the NFT, let's now start to create a new test. Therefore, create the file `TicketToken.ts` inside the `test` folder. Below is a template with an initial test for the token name and symbol that you can use:
 
 ```typescript
 import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers } from "hardhat";
+
+const validIPFS = "ipfs://bafkreigbny3owmnda6ojabcpyoukswh75tto4gpqkitswtv6tb4ypb7aaa";
+const redeemedIPFS = "ipfs://bafkreiccyxvqbivjcjbebiuva4d2lwrg47bxmffjpho2cab3ktyacxqqbu";
 
 describe("TicketToken", function () {
 
@@ -70,45 +77,21 @@ describe("TicketToken", function () {
 
   });
 
+  // add here next tests
+
 });
 
 ```
 
-You should be able to run this basic test via `npx hardhat test`.
+You should be able to run this basic test via:
+
+ ```shell
+ npx hardhat test
+ ```
 
 ## Augmenting a standard function - storing more than one token URI
 
-As the token minting function - safeMint - will now have to take two token URIs, one for the valid version and one for the redeemed version, we have to **replace** the safeMint function. To accomodate for the storage of the second URI, we simply create another function - `_setRedeemedTokenURI`. Add the following code to the `contracts/TicketToken.sol` file (replace safeMint if it is already there).
-
-```solidity
-function safeMint(
-    address to,
-    string memory validURI,
-    string memory redeemedURI
-) public onlyOwner {
-    uint256 tokenId = _tokenIdCounter.current();
-    _tokenIdCounter.increment();
-    _validity[tokenId] = true;
-    _safeMint(to, tokenId);
-    _setTokenURI(tokenId, validURI);
-    _setRedeemedTokenURI(tokenId, redeemedURI);
-}
-
-function _setRedeemedTokenURI(uint256 tokenId, string memory _tokenURI)
-    internal
-    virtual
-{
-    require(
-        _exists(tokenId),
-        "ERC721URIStorage: URI set of nonexistent token"
-    );
-    _redeemedTokenURIs[tokenId] = _tokenURI;
-}
-```
-
-Once you made changes to the smart contract, don't forget to run `npx hardhat compile` again so the TypeScript system can correctly catch up with the new API defintion.
-
-It is good practice to test this right away or even to write test before we add even the implementation (which we will do next). For now, we catch up with a test for new minting function in our `tests/TocketToken.ts` test file:
+It is good practice to write a test before we add new functionallity. Therefore, add the following code after the `add here next tests` comment in our test file `tests/TocketToken.ts`:
 
 ```typescript
     it("Should mint a token with token ID 0 & 1 to account1", async function () {
@@ -142,13 +125,42 @@ It is good practice to test this right away or even to write test before we add 
       expect(await token.balanceOf(addressOwner)).to.equal(0);      
       expect(await token.balanceOf(address2)).to.equal(1);      
     });
+
+    // add here more tests
 ```
 
-For the new test to work, we need to add two constants for the valid/redeemed IPFS URLs. Add these **just below the imports** of the test to make them global, so we can refer to these from all other tests later on:
+The call `npx hardhat test` will fail with `too many arguments`.
 
-```typescript
-const validIPFS = "ipfs://bafkreigbny3owmnda6ojabcpyoukswh75tto4gpqkitswtv6tb4ypb7aaa";
-const redeemedIPFS = "ipfs://bafkreiccyxvqbivjcjbebiuva4d2lwrg47bxmffjpho2cab3ktyacxqqbu";
+The token minting function `safeMint` will now have to take two token URIs, one for the valid version and one for the redeemed version, we have to **replace** the safeMint function in the `contracts/TicketToken.sol` file:
+
+```solidity
+function safeMint(
+    address to,
+    string memory validURI,
+    string memory redeemedURI
+) public onlyOwner {
+    uint256 tokenId = _tokenIdCounter.current();
+    _tokenIdCounter.increment();
+    _validity[tokenId] = true;
+    _safeMint(to, tokenId);
+    _setTokenURI(tokenId, validURI);
+    _setRedeemedTokenURI(tokenId, redeemedURI);
+}
+```
+
+To accomodate the storage of the second URI, we simply create the function `_setRedeemedTokenURI`. As you can see above this function is called by `safeMint`. Add the following code into the `contracts/TicketToken.sol` file:
+
+```solidity
+function _setRedeemedTokenURI(uint256 tokenId, string memory _tokenURI)
+    internal
+    virtual
+{
+    require(
+        _exists(tokenId),
+        "ERC721URIStorage: URI set of nonexistent token"
+    );
+    _redeemedTokenURIs[tokenId] = _tokenURI;
+}
 ```
 
 Now we can run the test again:
@@ -157,11 +169,29 @@ Now we can run the test again:
 npx hardhat test
 ```
 
+This compiles our smart contract and the test should succeed.
+
+### Valid and Redeemed Images
+
+You may have noticed that the test file contains the two constant values for the images.
+
+validIPFS:
+
+```text
+ipfs://bafkreigbny3owmnda6ojabcpyoukswh75tto4gpqkitswtv6tb4ypb7aaa
+```
+
+redeemedIPFS:
+
+```text
+ipfs://bafkreiccyxvqbivjcjbebiuva4d2lwrg47bxmffjpho2cab3ktyacxqqbu
+```
+
 ## Storing token redemption on the blockchain
 
- We also need a way to mark a TicketToken NFT used - for this we need to add another function. But let's now create a test for this first. Once a ticket has been redeemed using the redeem function, we need to check the state was correctly put onto the blockchain.
+ We also need a way to mark a TicketToken NFT used - for this we need to add another function. But let's create a test again. Once a ticket has been redeemed using the redeem function, we need to check that the state was correctly changed on the blockchain.
 
- We will create a new test section for all utility tests. Therefore, we add the following `describe` code before the last line:
+ We will create a new test section for all utility tests. Therefore, we add the following `describe` code after the `add here more tests` comment:
 
 ```typescript
 describe("Utility", function () {
@@ -189,6 +219,12 @@ describe("Utility", function () {
       expect(await token.isAvailable(tokenId)).to.equal(false);      
     });
 
+    // add test "only owner can redeeme ticket"
+
+    // add test "don't transferred after redemption"
+
+    // add test "metadata"
+
   });
  ```
 
@@ -204,14 +240,14 @@ If you run `npx hardhat test` we expect to see a couple of issues, mainly our co
     }
 ```
 
-(Don't forget to compile with `npx hardhat compile`...)
-
 `npx hardhat test` should now happily walk through all the tests.
 
-Let's now write another test that tests if only the owner of the contract, which could be the organizer of a concert, is able to mark a ticket as redeemed.
+### Test that only owner can redeeme ticket
+
+Let's now write another test that tests if only the owner of the contract, which could be the organizer of a concert, is able to mark a ticket as redeemed. Add the following test after `add test "only owner can redeeme ticket"` in our test file:
 
 ```typescript
-    it("Should mint a token, thow exception as token owner tries to mark used (onlyOwner = contract owner)", async function () {
+    it("Should mint a token, throw exception as token owner tries to mark used (onlyOwner = contract owner)", async function () {
 
       const { token, firstAccount } = await loadFixture(deployFixture);
   
@@ -228,7 +264,7 @@ This should just work and confirms that the Solidity modifier 'onlyOwner' works 
 
 ## Stopping tickets from being transferred after redemption
 
-Let's now work on the transferability features. If you recall, only a valid (not redeemed) ticket shall be transferable to another user. Once redeemed, no more transfers should be accepted. We will first write two tests for this:
+Let's now work on the transferability features. If you recall, only a valid (not redeemed) ticket shall be transferable to another user. Once redeemed, no more transfers should be accepted. We will first write two tests for this. Add the following tests after `add test "don't transferred after redemption"` in our test file:
 
 ```typescript
     it("Should mint a token and check that validity is true and transfer token to address2", async function () {
@@ -256,14 +292,13 @@ Let's now work on the transferability features. If you recall, only a valid (not
       await token.redeem(tokenId);      
       expect(await token.isAvailable(tokenId)).to.equal(false);
 
-
       await expect(token.connect(firstAccount).transferFrom(address1, address2, tokenId)).to.be.revertedWith(
          "TICKET: ticket has already been used."
        );
     });
 ```
 
-Running the tests right now will fail the second test, as we have not yet implemented the non-transferability feature. Let's change the transfer method of our smart contract. Add the following which overrides the built-in transfer method and adds another check:
+Running the tests right now will fail the second test, as we have not yet implemented the non-transferability feature. Let's modify the transfer method of our smart contract. Therefore, add the function `_transfer` to override the built-in OpenZeppelin transfer method. This methode adds a check if the ticket is already used:
 
 ```solidity
     function _transfer(
@@ -279,11 +314,11 @@ Running the tests right now will fail the second test, as we have not yet implem
     }
 ```
 
-Now the smart contract will revert transactions that do not satisfy the require rule we have added. Running the tests again should now again pass all tests.
+Now the smart contract will revert transactions that do not satisfy the require rule we have added. Running the tests with `npx hardhat test` again should now again pass all tests.
 
 ## Changing NFT metadata based on redemption status
 
-The final feature to implement is to change the appearance of our NFT based on the availability status. Let's again first add two tests:
+The final feature to implement is to change the appearance of our NFT based on the availability status. Let's again first add two tests after `add test "metadata"` in our test file:
 
 ```typescript
 it("Should mint a token and check that tokenURI is validIPFS", async function () {
@@ -308,7 +343,9 @@ it("Should mint a token, redeem and check that tokenURI is redeemedIPFS", async 
 });
 ```
 
-For this feature, we need to change the tokenURI method. It is already available in the `TicketToken.sol` contract and needs to be changed to this implementation:
+The test will fail because we expect a different image for a redeemed ticket.
+
+For this feature, we need to adjust the tokenURI method. This method is already available in the `TicketToken.sol` contract and needs to be **replaced** by this implementation:
 
 ```solidity
 function tokenURI(uint256 tokenId)
@@ -327,12 +364,16 @@ function tokenURI(uint256 tokenId)
 }
 ```
 
-As you can see, it's a simple `if statement` that helps us to distinguish the two URIs. Run the tests - they should all pass.  
+As you can see, it's a simple `if statement` that helps us to distinguish the two URIs. Run the tests for a last time with `npx hardhat test` and they should all pass.  
 
-Note: if you decide to deploy this smart contract later on and create a sample NFT, you might notice that marketplaces such as OpenSea still show the original NFT metadata even after redemption. That's because these marketplaces aggressively cache the IPFS metadata of the NFT. You can either wait a few hours until they refresh the cache or hit the "reload metadata" button that you find on OpenSea NFT detail pages.
+**Note**: If you decide to deploy this smart contract later on and create a sample NFT, you might notice that marketplaces such as OpenSea still show the original NFT metadata even after redemption. That's because these marketplaces aggressively cache the IPFS metadata of the NFT. You can either wait a few hours until they refresh the cache or hit the "Refresh metadata" button that you find on OpenSea NFT detail pages. But you can always use the Etherscan Explorer to verify the tokenURI.
+
+**Note**: You can find the image URIs in the test file.
 
 ## Summary
 
-Congratulations! By now you have added a lot of functionality to our NFT smart contract and you have even verified most functionality with tests. If you want, feel free to deploy the new smart contract to Goerli (check [exercise 2](../ex2/README.md) of this tutorial) and test it all out on a real testnet.
+Congratulations! 🎉
+
+By now you have added a lot of functionality to our NFT smart contract and you have even verified most functionality with tests. If you want, feel free to deploy the new smart contract to the Goerli Ethereum blockchain. Based on [exercise 2](../ex2/README.md) you are able to test the redeem functionality on a real testnet.
 
 Thx for staying with us this far. If you have extra questions, we're here to help. Just let us know!
