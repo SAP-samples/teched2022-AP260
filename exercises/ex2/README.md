@@ -21,7 +21,6 @@ Let's configure a new ERC-721 smart contract:
 
   - `Mintable` - our NFT should be mintable
   - `Auto Increment Ids` - the internal uninque TokenID shall be automatically incremented.
-  - 'Burnable' - allows the owner of the NFT to _delete_ the NFT.
   - `URI Storage` - to be able to specify for each NFT own metadata
 
 ![Using the OpenZeppelin smart contract wizard](images/wizard.png)

@@ -4,13 +4,7 @@ If you came here to learn about modern smart contract development, you're at the
 
 ## Creating and exploring an new Hardhat project
 
-Open Visual Code
-
-TODO Screenshot
-
-Open Terminal
-
-TODO Screenshot
+![Open a Terminal in Visual Studio Code](images/terminal.png)
 
 To get started with Hardhat, please create a new `ap260` folder and open this folder in the Visual Studio Code Terminal:
 
