@@ -1,4 +1,4 @@
-# Excercise 1 - Intro to Web3/Smart Contrcact Development with Hardhat, Ethereum and Solidity
+# Exercise 1 - Intro to Web3/Smart Contrcact Development with Hardhat, Ethereum and Solidity
 
 If you came here to learn about modern smart contract development, you're at the right spot. In this exercise, you will learn how to install and use the latest and most up-to-date tools with the help of a simple starter project. 
 
@@ -35,11 +35,11 @@ Now, we'll be installing hardhat as a developer dependency:
 npm install hardhat --save-dev
 ```
 
-Once this finishes, please verify that you can run `npx hardhat` and follow the steps to create a new TypeScript project - accept all the other defaults. Et voilà - you just created your first hardhat sample project. Take a look around before we continue. 
+Once this finishes, please verify that you can run `npx hardhat` and follow the steps to **create a new TypeScript project - accept all the other defaults. Et voilà - you just created your first hardhat sample project. Take a look around before we continue. 
 
 ![Creating a new Hardhat sample project](images/new_hardhat.png)
 
-Now install some additional dependencies that we need for the sample project:
+Once you accepted 'TypeScript project' accept all the details. Now install some additional dependencies that we need for the sample project:
 
 ```
 npm install --save-dev "hardhat@^2.11.2" "@nomicfoundation/hardhat-toolbox@^2.0.0"
@@ -75,7 +75,7 @@ Before we conclude this basic "get to know hardhat" part, we will deploy the com
 
 ## Deploying the sample contract to a local test network
 
-You will notice a deployment script for the `Lock.sol` contract in the `scripts` folder. It uses the TypeScript variant of ethers.js, a well-known Ethereum JavaScript library. 
+You will notice a deployment script for the `Lock.sol` contract in the `scripts`  folder called `deploy.ts`. It uses the TypeScript variant of ethers.js, a well-known Ethereum JavaScript library. 
 
 This script first calculates a timestamp being one year in the future, in seconds:
 
