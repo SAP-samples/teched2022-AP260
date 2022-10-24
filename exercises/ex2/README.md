@@ -169,7 +169,7 @@ You would normally require an Etherscan API key. Luckily, we prepared one for yo
 **ACTION REQUIRED**:
 
 - Check for the Etherscan API key.
-- Replace in the the `hardhat.config.ts` file the 'xxx'.
+- In the `hardhat.config.ts` file replace the 'xxx' string with the Etherscan API key.
 
 Verification is now a piece of cake - but you have to remember the contract address:
 

@@ -219,16 +219,16 @@ describe("Utility", function () {
       expect(await token.isAvailable(tokenId)).to.equal(false);      
     });
 
-    // add test "only owner can redeeme ticket"
+    // add test "only owner can redeem ticket"
 
-    // add test "don't transferred after redemption"
+    // add test "no transfer after redemption"
 
     // add test "metadata"
 
   });
  ```
 
-If you run `npx hardhat test` we expect to see a couple of issues, mainly our contract is missing a redeem and isAvailable function. Let's add these to the contract:
+If you run `npx hardhat test` we expect to see a couple of issues, mainly our contract is missing a `redeem` and `isAvailable` function. Let's add these to the contract:
 
 ```solidity
     function redeem(uint256 tokenId) public onlyOwner {
@@ -242,9 +242,9 @@ If you run `npx hardhat test` we expect to see a couple of issues, mainly our co
 
 `npx hardhat test` should now happily walk through all the tests.
 
-### Test that only owner can redeeme ticket
+### Test that only owner can redeem ticket
 
-Let's now write another test that tests if only the owner of the contract, which could be the organizer of a concert, is able to mark a ticket as redeemed. Add the following test after `add test "only owner can redeeme ticket"` in our test file:
+Let's now write another test that tests if only the owner of the contract, which could be the organizer of a concert, is able to mark a ticket as redeemed. Add the following test after `add test "only owner can redeem ticket"` in our test file:
 
 ```typescript
     it("Should mint a token, throw exception as token owner tries to mark used (onlyOwner = contract owner)", async function () {
@@ -260,11 +260,11 @@ Let's now write another test that tests if only the owner of the contract, which
     });
 ```
 
-This should just work and confirms that the Solidity modifier 'onlyOwner' works just as expected for our redeem function.
+This should just work and confirms that the Solidity modifier `onlyOwner` works just as expected for our redeem function.
 
 ## Stopping tickets from being transferred after redemption
 
-Let's now work on the transferability features. If you recall, only a valid (not redeemed) ticket shall be transferable to another user. Once redeemed, no more transfers should be accepted. We will first write two tests for this. Add the following tests after `add test "don't transferred after redemption"` in our test file:
+Let's now work on the transferability features. If you recall, only a valid (not redeemed) ticket shall be transferable to another user. Once redeemed, no more transfers should be accepted. We will first write two tests for this. Add the following tests after `add test "no transfer after redemption"` in our test file:
 
 ```typescript
     it("Should mint a token and check that validity is true and transfer token to address2", async function () {
