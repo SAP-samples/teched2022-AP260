@@ -33,9 +33,9 @@ Note to non-workshop, self-paced / study at home participants: You will notice t
 
  If you follow along outside of a workshop, plan for some extra time to create accounts and request API keys for these services:
 
-- [Alchemy](https://www.alchemy.com/) - well-known web3 development platform which gives us access to live blockchain nodes (we use the Goerli test network)
+- [Alchemy](https://www.alchemy.com/) - well-known web3 development platform which gives us access to live blockchain nodes (we use the Polygon Mumbai test network)
 - [Etherscan](https://etherscan.io/) - the Ethereum Blockchain Explorer which we use to interact and verify our smart contracts
-- [MetaMask](https://metamask.io/), a well-known crypto wallet which is installed as a plugin to web browsers such as Chrome or Edge. You will need to export the private key for the Hardhat config of one of the accounts. If you need to fund your account with Goerli test ETH, we recommend to use [goerlifaucet.com](https://goerlifaucet.com/) which requires an Alchemy account.
+- [MetaMask](https://metamask.io/), a well-known crypto wallet which is installed as a plugin to web browsers such as Chrome or Edge. You will need to export the private key for the Hardhat config of one of the accounts. If you need to fund your account with Mumbai test MATIC, we recommend to use [mumbaifaucet.com](https://mumbaifaucet.com/) which requires an Alchemy account.
 
 </details>
 
