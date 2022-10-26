@@ -100,7 +100,7 @@ npx hardhat run scripts/deployTeched.ts
 All good? Then let's add a new network to our Hardhat configuration to be able to deploy to a public network.
 As the Ethereum network is very unpredictable with the fee prices we will choose the Polygon blockchain. [Polygon is a decentralised Ethereum scaling platform](https://polygon.technology/) and it is fully compatible to Ethereum. But has way lower fees, which is great for this workshop. The testnet on Polygon is called Mumbai.
 
-To add this network to our Hardhat configuration, please open the file `hardhat.config.ts` and add the network configuration for `mumbai` - just copy the code below. We will next discuss a few things we need to change in this file.
+To add this network to our Hardhat configuration, please open the file `hardhat.config.ts` and **replace** the complete content to add the network configuration for `mumbai` - just copy the code below. We will next discuss a few things we need to change in this file.
 
 ```typescript
 import { HardhatUserConfig } from "hardhat/config";
@@ -147,7 +147,7 @@ npx hardhat run scripts/deployTeched.ts --network mumbai
 
 If all went well, you have now successfully deployed your first NFT smart contract to the Mumbai testnet.
 
-<marquee>**Please take note of the contract address that is printed in the logs.**</marquee>
+**Please take note of the contract address that is printed in the logs.**
 
 ## Polygonscan verifies your smart contract
 
@@ -207,13 +207,15 @@ As we are using the Mumbai test network, we first need to add support of the Mum
 
 - Visit [mumbai.polygonscan.com](https://mumbai.polygonscan.com/)
 - Scroll to the bottom and click `Add Mumbai Network`
-- !!!!!!! TODO more??? e.g. switch test network: --please now switch the network used for MetaMask via the top drop down box to the Goerli Test Network. For this, you need to enable the test networks by clicking the **Show/hide test networks**. ![Show the test networks](images/showhide.png)--
+- `Approve` and `Switch` the Mumbai network in MetaMask
 
 ![Add Mumbai Network](images/add_mumbai_network.png)
 
 ## Creating a first NFT with the Polygonscan Explorer and MetaMask
 
 Once MetaMask is ready, reload the Polygonscan Explorer page with your smart contract. In the bottom tab, be sure to have switched to Contract (which now has the green verification check mark) and click on `Write Contract` to see the write functions of your smart contract. Next, click `Connect to Web3`. This will pop up the MetaMask plugin and will need to confirm the connection to this web page.
+
+**Verify** that the text on Polygonscan changed to `Connected - Web3` (otherwise you need to connect again).
 
 We will next create our first NFT by calling the safeMint function - click on `safeMint` in the function list on Polygonscan. This function requires two inputs:
 
@@ -223,7 +225,7 @@ We will next create our first NFT by calling the safeMint function - click on `s
 TODO Screenshot
 ![Calling safeMint from Polygonscan](images/etherscan_safemint.png)
 
-To mint your first NFT, let's choose your public address (look it up via MetaMask) for the `to` field. For the `uri` (for the metadata), you can use the following [IPFS](https://en.wikipedia.org/wiki/InterPlanetary_File_System) link, which we have prepared beforehand:
+To mint your first NFT, let's choose your public address (look it up via MetaMask or in your downloaded file) for the `to` field. For the `uri` (for the metadata), you can use the following [IPFS](https://en.wikipedia.org/wiki/InterPlanetary_File_System) link, which we have prepared beforehand:
 
 ```text
 ipfs://bafkreifbyh6ekzouvhs43hrlyxoibtrkpqqp2ttjcbm5tailauzsds6bwu

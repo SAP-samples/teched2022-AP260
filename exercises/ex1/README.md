@@ -4,6 +4,8 @@ If you came here to learn about modern smart contract development, you're at the
 
 ## Creating and exploring an new Hardhat project
 
+First open Visual Studio Code and then open a Terminal **inside** of Visual Studio Code:
+
 ![Open a Terminal in Visual Studio Code](images/terminal.png)
 
 To get started with Hardhat, please create a new `ap260` folder and open this folder in the Visual Studio Code Terminal:
@@ -12,6 +14,10 @@ To get started with Hardhat, please create a new `ap260` folder and open this fo
 mkdir ap260
 cd ap260
 ```
+
+TODO Open Folder Screenshot
+
+
 
 Next, let's create a new NodeJs project:
 
