@@ -15,9 +15,7 @@ mkdir ap260
 cd ap260
 ```
 
-TODO Open Folder Screenshot
-
-
+![Open Folder in Visual Studio Code](images/open_folder.png)
 
 Next, let's create a new NodeJs project:
 

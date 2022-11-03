@@ -1,9 +1,5 @@
 # Exercise 2 - Diving into the world of NFTs
 
-## TODOs
-
-- Bilder
-
 We're now ready to dive into the world of NFTs. On Ethereum, NFTs are represented via smart contracts, interacted with via the contract's functions and the uniqueness of an NFT is guaranteed by state kept on a public blockchain. By the end of this exercise, you will have deployed your own NFT smart contract to a public testnet blockchain and you will be able see your NFT on OpenSea.
 
 Ready? Let's go! (the more you get involved with crypto, chances are that you will soon write LFG!!! - it means "let's f$%^ go!").
@@ -159,7 +155,6 @@ At this point you have deployed the NFT smart contract, but you have not yet cre
 
 Open a browser and navigate to [mumbai.polygonscan.com](https://mumbai.polygonscan.com/). In the big search bar, type the address of the contract you took note of earlier. Once the page has loaded, click the `Contract` tab which is a bit below.
 
-TODO Screenshot PolygonScan
 ![Polygonscan](images/contract_tab.png)
 
 Bummer. You will now see the compiled contract, which is not really fun to interact with. The trick is called verification. We will now let Polygonscan verify our newly deployed smart contract. Then we are able to interact with the smart contract with the Polygonscan Explorer web interface.
@@ -222,8 +217,7 @@ We will next create our first NFT by calling the safeMint function - click on `s
 - to: the address the NFT should be owned by
 - uri: a link to the metadata of the NFT
 
-TODO Screenshot
-![Calling safeMint from Polygonscan](images/etherscan_safemint.png)
+![Calling safeMint from Polygonscan](images/polygon_safemint.png)
 
 To mint your first NFT, let's choose your public address (look it up via MetaMask or in your downloaded file) for the `to` field. For the `uri` (for the metadata), you can use the following [IPFS](https://en.wikipedia.org/wiki/InterPlanetary_File_System) link, which we have prepared beforehand:
 
