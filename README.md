@@ -1,3 +1,5 @@
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/teched2022-AP260)](https://api.reuse.software/info/github.com/SAP-samples/teched2022-AP260)
+
 # AP260 - Beyond Just an NFT: Unlocking Utility in Smart Contracts
 
 ## Description
