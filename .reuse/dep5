@@ -1,5 +1,5 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: teched2021-AP260
+Upstream-Name: teched2022-AP260 
 Upstream-Contact: [sven.haiges@sap.com][lars.gregori@sap.com][scott.young01@sap.com]
 Source: https://github.com/sap-samples/teched2022-AP260
 Disclaimer: The code in this project may include calls to APIs (“API Calls”) of
